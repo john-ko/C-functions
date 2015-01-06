@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+//concat function using for loops
 char* concat_forloop(char* first, int first_size, char* second, int second_size)
 {
 	int size = first_size + second_size;
@@ -23,7 +24,8 @@ char* concat_forloop(char* first, int first_size, char* second, int second_size)
 	return concat;
 }
 
-char* concat_malloc(char* first, int first_size, char* second, int second_size)
+//concat function use memcpy
+char* concat_mempcy(char* first, int first_size, char* second, int second_size)
 {
 	int size = first_size + second_size;
 	char * concat;
@@ -44,9 +46,9 @@ int main()
 
 	concat_word1 = concat_forloop(first, sizeof(first)-1, second, sizeof(second)-1);
 	printf("new word is: %s \n", concat_word1);
-	
+	//outputs HelloWorld!!
 
-	concat_word2 = concat_malloc(first, sizeof(first)-1, second, sizeof(second)-1);
+	concat_word2 = concat_memcpy(first, sizeof(first)-1, second, sizeof(second)-1);
 	printf("new word is: %s \n", concat_word2);
-	
+	//outputs HelloWorld!!
 }
