@@ -18,14 +18,14 @@ char* concat_forloop(char* first, int first_size, char* second, int second_size)
 
 	for(int i = first_size; i < size+1; i++)
 	{
-		concat[i] = second[i - first_size + 1];
+		concat[i] = second[i - first_size];
 	}
 	
 	return concat;
 }
 
 //concat function use memcpy
-char* concat_mempcy(char* first, int first_size, char* second, int second_size)
+char* concat_memcpy(char* first, int first_size, char* second, int second_size)
 {
 	int size = first_size + second_size;
 	char * concat;
