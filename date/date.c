@@ -15,6 +15,8 @@ struct time {
     char string[16];
 };
 
+/*
+
 unsigned char pressed(unsigned char r, unsigned char c)
 {
     DDRC = 0x0F;
@@ -60,15 +62,45 @@ unsigned char parse_key(unsigned char in)
         return 100;
     return 200;
 }
+*/
 
-unsigned char get_actual_key() {
+unsigned char get_key() {
+    unsigned char num;
+    int number;
+    printf("enter key\n");
+
+    number = getchar();
+    number -= 48;
+    return number;
+}
+
+unsigned char parse_key(unsigned char in) {
+    return in;
+}
+
+void wait_avr(int number) {
+
+}
+
+/*unsigned char get_actual_key() {
     unsigned char key;
     for (;;) {
-        key = parse_key(get_get());
+        key = parse_key(get_key());
 
         if (key >= 0 && key <= 9)
         {
             return '0' + key;
+        }
+    }
+}*/
+unsigned char get_actual_key() {
+    unsigned char key;
+    for (;;) {
+        key = parse_key(get_key());
+
+        if (key >= 0 && key <= 9)
+        {
+            return key;
         }
     }
 }
@@ -167,7 +199,8 @@ struct date *date_factory() {
 }
 
 void set_month(struct date *date) {
-
+    unsigned char month_1;
+    unsigned char month_2;
     for(;;) {
         month_1 = get_actual_key();
         if (month_1 == 0 || month_1 == 1) {
@@ -241,10 +274,10 @@ void set_year(struct date *date) {
 
 unsigned char get_time_input(struct time *time) {
     unsigned char input_1;
-    unsigned char input_2
+    unsigned char input_2;
     for(;;) {
         input_1 = get_actual_key();
-        if (input_1 <= 5 {
+        if (input_1 <= 5) {
             // update_screen_time
 
             wait_avr(400);
@@ -255,7 +288,7 @@ unsigned char get_time_input(struct time *time) {
     input_2 = get_actual_key();
     // update_screen_time
 
-    return input * 10 + input_2;
+    return input_1 * 10 + input_2;
 }
 
 void set_hour(struct time *time) {
@@ -264,22 +297,27 @@ void set_hour(struct time *time) {
 
     for(;;) {
         hour_1 = get_actual_key();
+        
         if (hour_1 >= 0 && hour_1 <= 2) {
             // update_screen
             wait_avr(400);
+            printf("success\n");
             break;
         }
+        printf("failed\n");
     }
 
     for (;;) {
         hour_2 = get_actual_key();
         // error
-        if (hour_1 == 2 && hour_2 > 3)) {
+        if (hour_1 == 2 && hour_2 > 3) {
+            printf("failed");
             continue;
         }
-
+        printf("success");
         wait_avr(400);
         // update screen
+        break;
     }
 
     time->hour = hour_1 * 10 + hour_2;
@@ -287,11 +325,10 @@ void set_hour(struct time *time) {
 
 void set_minute(struct time *time) {
     unsigned char input_1;
-    unsigned char input_2
+    unsigned char input_2;
     for(;;) {
         input_1 = get_actual_key();
-        if (input_1 <= 5 {
-            time->minute 
+        if (input_1 <= 5) {
             // update_screen_time
 
             wait_avr(400);
@@ -302,15 +339,15 @@ void set_minute(struct time *time) {
     input_2 = get_actual_key();
     // update_screen_time
 
-    return input * 10 + input_2;
+    time->minute = input_1 * 10 + input_2;
 }
 
 void set_second(struct time *time) {
     unsigned char input_1;
-    unsigned char input_2
+    unsigned char input_2;
     for(;;) {
         input_1 = get_actual_key();
-        if (input_1 <= 5 {
+        if (input_1 <= 5) {
             // update_screen_time
 
             wait_avr(400);
@@ -321,7 +358,7 @@ void set_second(struct time *time) {
     input_2 = get_actual_key();
     // update_screen_time
 
-    return input * 10 + input_2;
+    time->second = input_1 * 10 + input_2;
 }
 
 void set_date_not_used(struct date *date) {
@@ -332,42 +369,28 @@ void set_date_not_used(struct date *date) {
 
 int main() {
     struct time *time = malloc(sizeof(time));
-    time->hour = 23;
-    time->minute = 59;
-    time->second = 58;
-
-    
-
     struct date *date = malloc(sizeof(date));
-    date->month = 12;
-    date->date = 31;
-    date->year = 1999;
+
+
+    set_hour(time);
+    print_time(time);
+    set_minute(time);
+    print_time(time);
+    set_second(time);
+    print_time(time);
+
+    set_month(date);
+    print_date(date);
+    set_date(date);
+    print_date(date);
+    set_year(date);
+    print_date(date);
+
 
     print_date(date);
-    print_time(time);
+
     
-    if (increment_time(time)) {
-        increment_date(date);
-    }
-    print_date(date);
-    print_time(time);
-
-    if (increment_time(time)) {
-        increment_date(date);
-    }
-    print_date(date);
-    print_time(time);
-
-
-    int key = -1;
-
-    char test = '0' + key;
-    printf("[%c]\n", test);
-    printf("asdf");
-    
-
 
 
     return 0;
 }
-
