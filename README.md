@@ -16,3 +16,6 @@ plays music using ATMega32
 
 ## heap_allocator
 virtual heap allocator but without coalescing
+
+## shell
+a small shell
