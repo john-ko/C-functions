@@ -283,13 +283,14 @@ int foward_response(struct request *request, int client_sockfd) {
 
     }
     
-    /* Logging portion */
+    /* logging portion */
     time(&timer);
     tm_info = localtime(&timer);
 
     char char_ip[100];
 
     unsigned long ip;
+    //struct in_addr ip;
     ip = request->socket->sin_addr.s_addr;
 
     printf("%lu\n", ip);
@@ -301,12 +302,12 @@ int foward_response(struct request *request, int client_sockfd) {
     sprintf(char_ip,"%d.%d.%d.%d", bytes[0], bytes[1], bytes[2], bytes[3]);
 
     printf("%s\n", char_ip);
-
     strftime(current_time, 30, "%a %d %b %G %T %Z", tm_info);
 
     puts(current_time);
     LOG_FILE = fopen("proxy.log", "a");
     fprintf(LOG_FILE, "%s: %s %s %d\n", current_time, char_ip, request->host, total_bytes);
+    //fputs("This is testing for fputs...\n", LOG_FILE);
     fclose(LOG_FILE);
     return close(server_sockfd);
 }
